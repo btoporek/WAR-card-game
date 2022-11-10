@@ -15,8 +15,7 @@ describe("MyFunctions", function () {
     it("should split the deck into two arrays with 26 cards", function () {
       //dealCards();
       console.log(playerOneHand);
-      expect(playerOneHand.length).to.have.lengthOf(26) &&
-        playerTwoHand.length.to.have.lengthOf(26);
+      expect(newDeck.deck.slice(0, 26).length).to.equal(26);
     });
   });
 });
