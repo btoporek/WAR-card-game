@@ -14,6 +14,7 @@
 //--------------------------------------------------------------------------------
 
 // Arrays for creating deck
+
 const cardSuits = ["hearts", "diamonds", "spades", "clubs"];
 const cardRanks = [
   "Ace",
@@ -73,73 +74,83 @@ const playerTwo = new Player("Mike");
 
 //--------------------------------------------------------------------------------
 
-// Empty arrays to store player hands
-let playerOneHand = [];
-let playerTwoHand = [];
+// Class to split the deck and deal out to players
+class Deal {
+  constructor() {
+    this.playerOneHand = [];
+    this.playerTwoHand = [];
+  }
+  dealCards(arr) {
+    let half = Math.ceil(arr.length / 2);
+    this.playerOneHand = arr.slice(0, half);
+    this.playerTwoHand = arr.slice(half);
+    console.log(`${playerOne.playerName}'s hand:`);
+    console.log(this.playerOneHand);
+    console.log(`${playerTwo.playerName}'s hand:`);
+    console.log(this.playerTwoHand);
+  }
+}
 
-//--------------------------------------------------------------------------------
-
-// Function to deal shuffled cards to player hands
-const dealCards = (arr) => {
-  let half = Math.ceil(arr.length / 2);
-  playerOneHand = arr.slice(0, half);
-  playerTwoHand = arr.slice(half);
-  console.log(`${playerOne.playerName}'s hand: `);
-  console.log(playerOneHand);
-  console.log(`${playerTwo.playerName}'s hand: `);
-  console.log(playerTwoHand);
-};
-dealCards(newDeck.deck);
-
+let dealToPlayers = new Deal();
+dealToPlayers.dealCards(newDeck.deck);
 console.log("Players now have their decks.");
 
 //--------------------------------------------------------------------------------
 
-// Function to start game and play through cards
-
-console.log("Time to play!");
-
-const playGame = () => {
-  for (let i = 0; i < 26; i++) {
-    console.log(
-      `${playerOne.playerName}'s card is: ${playerOneHand[i].rank} of ${playerOneHand[i].suit}`
-    );
-    console.log(
-      `${playerTwo.playerName}'s card is: ${playerTwoHand[i].rank} of ${playerTwoHand[i].suit}`
-    );
-    if (playerOneHand[i].value > playerTwoHand[i].value) {
-      console.log(`${playerOne.playerName} gets a point!`);
-      playerOne.playerScore += 1;
-    } else if (playerTwoHand[i].value > playerOneHand[i].value) {
-      console.log(`${playerTwo.playerName} gets a point!`);
-      playerTwo.playerScore += 1;
-    } else if (playerTwoHand[i].value === playerOneHand[i].value) {
-      console.log("Tie! No points awarded.");
+// Class to run game and play through cards
+class Game {
+  constructor() {
+    console.log("Time to play!");
+    this.pOneHand = dealToPlayers.playerOneHand;
+    this.pTwoHand = dealToPlayers.playerTwoHand;
+  }
+  playGame() {
+    for (let i = 0; i < 26; i++) {
+      console.log(
+        `${playerOne.playerName}'s card is: ${this.pOneHand[i].rank} of ${this.pOneHand[i].suit}`
+      );
+      console.log(
+        `${playerTwo.playerName}'s card is: ${this.pTwoHand[i].rank} of ${this.pTwoHand[i].suit}`
+      );
+      if (this.pOneHand[i].value > this.pTwoHand[i].value) {
+        console.log(`${playerOne.playerName} gets a point!`);
+        playerOne.playerScore += 1;
+      } else if (this.pTwoHand[i].value > this.pOneHand[i].value) {
+        console.log(`${playerTwo.playerName} gets a point!`);
+        playerTwo.playerScore += 1;
+      } else if (this.pTwoHand[i].value === this.pOneHand[i].value) {
+        console.log("Tie! No points awarded.");
+      }
     }
   }
-};
+}
 
-playGame();
+let startGame = new Game();
+startGame.playGame();
 
 //--------------------------------------------------------------------------------
 
-// Function to determine winner
-
+// Print current scores to the console
 console.log(`The final scores are as follows: 
 > ${playerOne.playerName}'s score: ${playerOne.playerScore}
 > ${playerTwo.playerName}'s score: ${playerTwo.playerScore}
 `);
 
-console.log("And the winner is...");
-
-const determineWinner = () => {
-  if (playerOne.playerScore > playerTwo.playerScore) {
-    console.log(playerOne.playerName);
-  } else if (playerTwo.playerScore > playerOne.playerScore) {
-    console.log(playerTwo.playerName);
-  } else {
-    console.log("Tie game!");
+// Class to determine and tell winner of the game
+class Winner {
+  constructor() {
+    console.log("And the winner is...");
   }
-};
+  determineWinner() {
+    if (playerOne.playerScore > playerTwo.playerScore) {
+      console.log(playerOne.playerName);
+    } else if (playerTwo.playerScore > playerOne.playerScore) {
+      console.log(playerTwo.playerName);
+    } else {
+      console.log("Tie game!");
+    }
+  }
+}
 
-determineWinner();
+let whoWon = new Winner();
+whoWon.determineWinner();

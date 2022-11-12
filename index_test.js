@@ -1,6 +1,6 @@
 let expect = chai.expect;
 
-describe("MyFunctions", function () {
+describe("CreateDeck", function () {
   describe("#newDeck", function () {
     it("should create deck of 52 cards", function () {
       let testDeck = new Deck();
@@ -10,11 +10,13 @@ describe("MyFunctions", function () {
   });
 });
 
-describe("MyFunctions", function () {
+describe("SplitCards", function () {
   describe("#dealCards", function () {
     it("should split the deck into two arrays with 26 cards", function () {
-      //dealCards();
-      console.log(playerOneHand);
+      // Arrange //
+      let splitDeck = new Deal();
+      console.log(dealToPlayers.playerOneHand);
+      // Assert
       expect(newDeck.deck.slice(0, 26).length).to.equal(26);
     });
   });
